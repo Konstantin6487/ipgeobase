@@ -23,8 +23,7 @@ Or install it yourself as:
 ## Usage
 
 `Ipgeobase.lookup('8.8.8.8')`
-
-    returns fields:
+returns fields:
 
 * `city`
 * `country`
