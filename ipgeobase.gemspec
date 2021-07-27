@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["konstantin6487@rambler.ru"]
 
   spec.summary       = "Information by IP"
-  spec.description   = "Service, which allows to receive information by IP"
+  spec.description   = "Service, which allows you to receive information by IP"
   spec.homepage      = "https://github.com/Konstantin6487/ipgeobase"
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
 
