@@ -8,17 +8,15 @@ module Ipgeobase
   class Location
     API_URL = "http://ip-api.com"
 
-    def build_url(ip, ext)
+    def build_url(ip)
       template = Addressable::Template.new("#{Location::API_URL}{/segments*}")
-      template.expand({ segments: [ext, ip] })
+      template.expand({ segments: ["xml", ip] })
     end
 
-    def lookup(ip, ext = "xml")
-      return unless ext.equal? "xml"
-
-      url = build_url ip, ext
+    def lookup(ip)
+      url = build_url ip
       response = HTTP.get url
-      Parsers.xml_parse response.to_s
+      Parsers.parse response
     end
   end
 end
