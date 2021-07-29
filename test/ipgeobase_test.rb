@@ -3,28 +3,21 @@
 require "test_helper"
 
 class IpgeobaseTest < Minitest::Test
-  attr_reader :api_url
-
-  def setup
-    @api_url = "http://ip-api.com"
-  end
-
   def test_that_it_has_a_version_number
     refute_nil ::Ipgeobase::VERSION
   end
 
   def test_load_address
-    file_name = "geobase_raw.xml"
-    address_data_raw = read_fixture_file file_name
-    ext = file_name.split(".").last
+    address_data_raw = read_fixture_file "geobase_raw.xml"
     ip = "83.169.216.199"
-    url = build_url api_url, ip: ip, ext: ext
+    url = build_url Ipgeobase::Location::API_URL, ip: ip
     run_stub url, method: :get, body: address_data_raw
-
-    expected = Ox.load(address_data_raw, mode: :hash)[:query]
     actual = Ipgeobase.lookup ip
 
-    %i[city country countryCode lat lon]
-      .each { |field| assert_equal expected[field], actual.instance_variable_get("@#{field}") }
+    assert_equal "56.8333", actual.lat
+    assert_equal "60.6", actual.lon
+    assert_equal "Russia", actual.country
+    assert_equal "RU", actual.countryCode
+    assert_equal "Yekaterinburg", actual.city
   end
 end

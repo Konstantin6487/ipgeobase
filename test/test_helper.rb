@@ -5,14 +5,13 @@ require "ipgeobase"
 
 require "minitest/autorun"
 require "webmock/minitest"
-require "ox"
 require "addressable/template"
 
 WebMock.disable_net_connect!
 
-def build_url(api_url, ip:, ext:)
+def build_url(api_url, ip:)
   template = Addressable::Template.new "#{api_url}{/segments*}"
-  template.expand({ segments: [ext || "xml", ip] })
+  template.expand({ segments: ["xml", ip] })
 end
 
 def run_stub(url, method:, body:)
